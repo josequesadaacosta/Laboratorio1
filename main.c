@@ -1,4 +1,4 @@
-/**
+/*
   ******************************************************************************
   * File Name          : main.c
   * Description        : Main program body
@@ -36,59 +36,38 @@
 #include <stdlib.h>
 #include <time.h>
 
-/* USER CODE BEGIN Includes */
 
-/* USER CODE END Includes */
-
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE BEGIN PV */
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void Error_Handler(void);
 static void MX_GPIO_Init(void);
 
-/* USER CODE BEGIN PFP */
-/* Private function prototypes -----------------------------------------------*/
 
-/* USER CODE END PFP */
-
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
+/** \brief  Random number generator:
+   creates a number sequence between 0  and 15 (16 numbers)*/
 int main(void)
 {
 
-  /* USER CODE BEGIN 1 */
+  
 
-  /* USER CODE END 1 */
-
-  /* MCU Configuration----------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  /** \details   HAL_Init(): Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* Configure the system clock */
+  /**  SystemClock_Config():Configure the system clock */
   SystemClock_Config();
 
-  /* Initialize all configured peripherals */
+  /** MX_GPIO_Init(): Initialize all configured peripherals */
   MX_GPIO_Init();
 
-  /* USER CODE BEGIN 2 */
+ 
 
-  /* USER CODE END 2 */
+  /** while(1): Infinite loop to excecute if user button is pressed */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
 	 
-  /* USER CODE END WHILE */
+  
   if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)) {	                     // checks if PA0 is set
 		
 	 HAL_GPIO_WritePin(GPIOE, GPIO_PIN_15, GPIO_PIN_RESET);    // switch off LED
@@ -101,6 +80,8 @@ int main(void)
 	 HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);     // switch off LED
 	
   
+  /** switch/case: switches on LEDs depending on the random number when the user button is pressed
+   */
   int i  = rand()%15;
 		
   switch (i){
@@ -222,8 +203,7 @@ int main(void)
 
 }
 
-/** System Clock Configuration
-*/
+/** System Clock Configuration*/
 void SystemClock_Config(void)
 {
 
@@ -270,18 +250,18 @@ static void MX_GPIO_Init(void)
 
   GPIO_InitTypeDef GPIO_InitStruct;
 
-  /* GPIO Ports Clock Enable */
+  /** GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
-  /*Configure GPIO pin : PA0 */
+  /**Configure GPIO pin : PA0 */
   GPIO_InitStruct.Pin = GPIO_PIN_0;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PE8 PE9 PE10 PE11 
+  /**Configure GPIO pins : PE8 PE9 PE10 PE11 
                            PE12 PE13 PE14 PE15 */
   GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11 
                           |GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
@@ -290,7 +270,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PD8 PD9 PD10 PD11 
+  /**Configure GPIO pins : PD8 PD9 PD10 PD11 
                            PD12 PD13 PD14 PD15 */
   GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11 
                           |GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
@@ -299,11 +279,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-  /*Configure GPIO pin Output Level */
+  /**Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11 
                           |GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
+  /**Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11 
                           |GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
 
